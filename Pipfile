@@ -12,6 +12,7 @@ jinja2 = "*"
 pymongo = "*"
 pydantic = {extras = ["email"], version = "*"}
 python-crontab = "*"
+schedule = "*"
 
 [dev-packages]
 

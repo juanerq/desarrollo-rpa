@@ -11,6 +11,7 @@ collectionUsers = myDb.user
 
 
 def shippingEntity(item) -> Shippings:
+  item['shipping_id'] = str(item['shipping_id'])
   return Shippings(**item)
 
 def shippingEntityList(entity) -> list[Shippings]:
@@ -34,8 +35,8 @@ def checkCanceledShipmentsThisMonth(user_mongo_id: str, status_list: list[Status
     user = collectionUsers.find_one({ "_id": user_id })
 
     if user:
-      order["order_vendor_dbname"] = userEntity(user)      
-
+      order["order_vendor_dbname"] = userEntity(user) 
+        
     orderLis.append(shippingEntity(order))
 
   return orderLis

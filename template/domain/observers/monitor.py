@@ -16,7 +16,7 @@ class ObserverMonitor(MonitorOrders):
   def monitor(self):
     self.orders = checkCanceledShipmentsThisMonth(self.user.mongo_id, CANCELLATION_STATUS)
     ordersFound = self.orders
-
+  
     if len(ordersFound) > CANCELED_ORDER_LIMIT:
       data = {
         'user': self.user,
