@@ -6,7 +6,6 @@ myDb = conn.store
 collectionUser = myDb.user
 
 def userEntity(item) -> User:
-  item['mongo_id'] = str(item['_id'])
   return User(**item)
 
 def userEntityList(entity) -> list[User]:
@@ -18,6 +17,10 @@ def getAllUsers() -> list[User]:
 def getUser(user: User) -> Optional[User]:
   user_db = collectionUser.find_one(user)
   return userEntity(user_db) if user_db else None
+
+def bulkCreateUsers(users: list[User]) -> list[User]:  
+  collectionUser.insert_many([user.__dict__ for user in users])
+  return users
 
 def createUser(user: User) -> User:
   exists = existUser({ 'user_id': user['user_id']})

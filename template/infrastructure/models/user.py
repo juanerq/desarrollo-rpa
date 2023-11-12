@@ -4,7 +4,6 @@ from typing import Optional
 from pydantic import BaseModel, EmailStr, constr, validator, root_validator
 
 class User(BaseModel):
-  mongo_id: Optional[str]
   user_id: str
   username: str
   email: Optional[EmailStr]
