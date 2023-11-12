@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+python-dotenv = "*"
+typing = "*"
+python-abc = "*"
+secure-smtplib = "*"
+jinja2 = "*"
+pymongo = "*"
+pydantic = {extras = ["email"], version = "*"}
+python-crontab = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
