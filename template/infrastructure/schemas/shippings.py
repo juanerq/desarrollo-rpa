@@ -53,22 +53,23 @@ def createShipping(item: Shippings) -> dict:
 def bulkCreateShippings(items: list[Shippings]) -> list[Shippings]:  
   return collectionShippings.insert_many(items)
 
-def checkUsersWithCanceledShipping(status_list: list[Status], date: datetime = datetime.now()):
+def checkUsersWithCanceledShipping(status_list: list[Status], date: datetime = datetime.now(), skip_shipping: list[ObjectId] = []):
   start_of_month = date.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
   end_of_month = (start_of_month + timedelta(days=32)).replace(day=1, hour=0, minute=0, second=0, microsecond=0) - timedelta(seconds=1)
 
   orders = collectionShippings.find({
+    '_id': { '$nin': skip_shipping },
     'shipping_date': {'$gte': start_of_month, '$lte': end_of_month},
     '$or': [{'shipping_status': status } for status in status_list]
   })
-
   userOrders = {}
-
+  count = 0
   for order in orders:
+    count += 1
     username = str(order.get("order_vendor_dbname"))
 
     if username not in userOrders:
       userOrders[username] = []
     userOrders[username].append(order)
-
+  print(count)
   return userOrders

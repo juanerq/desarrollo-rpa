@@ -1,32 +1,28 @@
-
-
-"""  
-createUser({
-  'user_id': '76876',
-  'username': 'Juan',
-  'email': 'XXXXXXXXXXXXXX',
-  'phone_number': '111111',
-})
-"""
-
 from datetime import datetime
 from domain.observers.monitor import ObserverMonitor
 from domain.observers.sendEmail import ObserverSendEmail
-from domain.observers.sendSms import ObserverSendSMS
 from infrastructure.schemas.users  import getAllUsers
-from infrastructure.schemas.shippings import checkUsersWithCanceledShipping, createShipping
+from infrastructure.schemas.shippings import checkUsersWithCanceledShipping
 
-from bson.objectid import ObjectId
 from infrastructure.models.status import Status
-from presentation.upload.loadData import loadShippings
+from infrastructure.schemas.logSentMessages import getMessagesIdsSent
+
+from schedule import repeat, every
 
 CANCELLATION_STATUS = [Status.RETURNED, Status.CANCELLED]
+EXECUTE_TIME = '12:00'
+
+date = datetime.strptime('2023-06-01', "%Y-%m-%d")
+
 class Server():
-  @staticmethod
-  def start() -> None:
-    date = datetime.strptime('2023-06-01', "%Y-%m-%d")
-    userOrders = checkUsersWithCanceledShipping(CANCELLATION_STATUS, date)
+  @repeat(every().day.at(EXECUTE_TIME))
+  def start():
+    messageIds = getMessagesIdsSent(date)
+    print(len(messageIds), 'messageIds')
+
+    userOrders = checkUsersWithCanceledShipping(CANCELLATION_STATUS, date, messageIds)
     users = getAllUsers()
+    print(f"👻 Num users {len(users)}")
 
     for user in users:
       user_mongo_id = str(user.id)
@@ -37,7 +33,7 @@ class Server():
       userMonitor = ObserverMonitor(user, userOrders[user_mongo_id])
 
       observerEmail = ObserverSendEmail()
-      observerSms = ObserverSendSMS()
+      # observerSms = ObserverSendSMS()
 
       userMonitor.attach_observer(observerEmail)
       # userMonitor.attach_observer(observerSms)

@@ -1,4 +1,8 @@
-from presentation.server import Server
+import schedule
+import time
+import presentation.server 
 
 if __name__ == '__main__':
-  Server().start()
+  while True:
+    schedule.run_pending()
+    time.sleep(1)
