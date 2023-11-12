@@ -22,7 +22,7 @@ from presentation.upload.loadData import loadShippings
 class Server():
   @staticmethod
   def start() -> None:
-    data = loadShippings('db_envios_challenge.csv')
+    data = loadShippings('files/db_envios_challenge.csv')
     print(data)
 
     return 
