@@ -1,5 +1,9 @@
 import csv
+from datetime import datetime
+from bson.objectid import ObjectId
+
 from infrastructure.schemas.users import bulkCreateUsers, userEntity
+from infrastructure.schemas.shippings import bulkCreateShippings
 
 
 def getDataFromCSV(csv_file_path: str):
@@ -21,6 +25,8 @@ def loadShippings(csv_file_path: str):
     nameUsers.add(row['order_vendor_dbname'])
 
   newUsers = []
+  newShippings = []
+  dicUser = {}
 
   for user in nameUsers:
     newUsers.append(
@@ -32,6 +38,34 @@ def loadShippings(csv_file_path: str):
       })
     )
 
-  bulkCreateUsers(newUsers)
+  result = bulkCreateUsers(newUsers)
+
+  ids_insertados = result.inserted_ids
+  index = 0
+
+  for objectId in ids_insertados:
+    newUsers[index]._id = objectId
+    dicUser[newUsers[index].username] = newUsers[index]
+    index += 1
+
+  index = 1
+
+  for row in data:
+    newShipping = {
+      'shipping_id': ObjectId(row['shipping_id']),
+      'shipping_status': row['shipping_status'],
+      'shipping_date': datetime.strptime(row['shipping_date'], "%Y-%m-%d"),
+      'order_vendor_dbname': dicUser[row['order_vendor_dbname']]._id,
+    }
+
+    newShippings.append(newShipping)
+
+    if index % 100000 == 0:
+      bulkCreateShippings(newShippings)
+      newShippings = []
+      index = 1
+
+    index += 1
 
   print('Upload data 👌')
+

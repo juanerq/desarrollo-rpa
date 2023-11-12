@@ -2,12 +2,20 @@ from datetime import datetime
 import re
 from typing import Optional
 from pydantic import BaseModel, EmailStr, constr, validator, root_validator
+from bson.objectid import ObjectId
 
 class User(BaseModel):
+  id: Optional[str] = None
   user_id: str
   username: str
   email: Optional[EmailStr]
   phone_number: Optional[constr(strip_whitespace=True)] = None
+
+  def __init__(self, *args, **kwargs):
+    if '_id' in kwargs and isinstance(kwargs['_id'], ObjectId):
+      kwargs['id'] = str(kwargs['_id'])
+
+    super().__init__(*args, **kwargs)
 
   @validator("phone_number")
   def validate_phone_number(cls, value):

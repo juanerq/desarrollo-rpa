@@ -19,8 +19,7 @@ def getUser(user: User) -> Optional[User]:
   return userEntity(user_db) if user_db else None
 
 def bulkCreateUsers(users: list[User]) -> list[User]:  
-  collectionUser.insert_many([user.__dict__ for user in users])
-  return users
+  return collectionUser.insert_many([user.__dict__ for user in users])
 
 def createUser(user: User) -> User:
   exists = existUser({ 'user_id': user['user_id']})

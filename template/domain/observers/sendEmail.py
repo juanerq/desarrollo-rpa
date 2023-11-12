@@ -9,7 +9,6 @@ class ObserverSendEmail(ObserverAlert):
   def update(self, change):
     user = change['user']
     orders = change['orders']
-    print(f"SEND EMAIL to {user.user_id} from {user.email}")
 
     smtp_server = config['SMTP_SERVER']
     smtp_port = config['SMTP_PORT']
@@ -21,8 +20,9 @@ class ObserverSendEmail(ObserverAlert):
     subject = 'Pedidos cancelados'
     
     html_content = self.createHtml(orders)
-
     email_sender.send_html_email(to_address, subject, html_content, True)
+
+    print(f"📬 Email sent to user {user.user_id} to email {user.email}")
 
   def createHtml(self, shippings: list[Shippings]) -> str:
     with open("template/config/templates/email.html", "r") as template_file:
