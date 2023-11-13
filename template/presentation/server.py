@@ -21,6 +21,8 @@ from infrastructure.models.status import Status
 # Configuracion de tiempo de ejecucion de la tarea
 EXECUTE_TIME = config['EXECUTE_TIME']
 
+logging.info(f"👀 The monitor runs at {EXECUTE_TIME}")
+
 # Servicio que contiene la logica de ejecucion de la tarea
 class Server():
   @repeat(every().day.at(EXECUTE_TIME))
