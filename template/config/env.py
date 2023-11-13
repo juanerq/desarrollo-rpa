@@ -1,5 +1,6 @@
 from dotenv import dotenv_values
 from infrastructure.models.status import Status
+from utils.main import Utils
 
 config = {
   **dotenv_values(".env"),

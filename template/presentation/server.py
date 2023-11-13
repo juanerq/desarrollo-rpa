@@ -1,6 +1,5 @@
 from bson.objectid import ObjectId
 from schedule import repeat, every
-from datetime import datetime
 import logging
 
 # Configuracion
@@ -19,6 +18,9 @@ from infrastructure.schemas.logSentMessages import getMessagesIdsSent
 # Modelos
 from infrastructure.models.status import Status
 
+# Utils
+from utils.main import Utils
+
 # Configuracion de tiempo de ejecucion de la tarea
 EXECUTE_TIME = config['EXECUTE_TIME']
 
@@ -29,6 +31,9 @@ class Server():
   @repeat(every().day.at(EXECUTE_TIME))
   def start():
     try:
+      # Se valida la fecha del mes configurada para el monitoreo, por defecto es el mes actual
+      monitorDate = Utils.validateAndFormatMonitorDate(config['MONITOR_IN_MONTH'])
+
       logging.info(f"🚀 Monitoring canceled shipments...")
       # Se obtienen los envíos ya notificados de los usuarios para omitirlos en los próximos mensajes
       messageIds = getMessagesIdsSent()
@@ -36,12 +41,12 @@ class Server():
       logging.debug(f"⚡ {len(messageIds)} oders already sent")
 
       # Se obtienen los usuarios con envíos cancelados en un diccionario donde la llave es el usuario y el valor la lista de ordenes
-      userOrders = checkUsersWithCanceledShipping(config['CANCELLATION_STATUS'], datetime.now(), messageIds)
+      userOrders = checkUsersWithCanceledShipping(config['CANCELLATION_STATUS'], monitorDate, messageIds)
       # Ids de usuarios con pedidos cancelados este mes
       idsUsers = [ObjectId(user_id) for user_id in userOrders.keys()]
       users = getAllUsersByIds(idsUsers)
 
-      logging.info(f"📦 Number of users to monitor the current month: {len(users)}")
+      logging.info(f"📦 Number of users to monitor the {config['MONITOR_IN_MONTH'] if config['MONITOR_IN_MONTH'] else 'current month'}: {len(users)}")
 
       for user in users:
         user_mongo_id = str(user.id)

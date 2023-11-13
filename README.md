@@ -3,6 +3,9 @@
 
 Siguiendo las [instrucciones](https://ordinary-increase-e87.notion.site/RPA-DATA-2da37f1d8e3b46bcbece442ca238678c) proporcionadas, se implementó el servicio dentro de un contenedor Docker. La elección de esta herramienta se fundamentó en su facilidad de despliegue y ejecución, lo que optimiza el proceso y asegura una mayor eficiencia en la gestión del servicio.
 
+La finalidad de este servicio es ejecutarse diariamente en el horario establecido, con el propósito de verificar los usuarios que posean tres o más órdenes en estado "returned" o "cancelled" en el mes configurado.
+
+
 ### Curiosidades
 - **Patrones de diseño**
   - **Hexagonal**
@@ -67,6 +70,7 @@ git clone https://github.com/juanerq/desarrollo-rpa.git
     - Copiar la llave y pegar en este campo
   - `EXECUTE_TIME` hora de ejecución diaria en formato militar
   - `TEST_MAIL` Correo al que se simulará el envío de correos a los usuarios
+  - `MONITOR_IN_MONTH` Mes en que se hará el monitoreo, formato año-mes, por defecto es el mes actual
   
 <br/>
 
