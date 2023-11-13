@@ -25,12 +25,12 @@ Siguiendo las [instrucciones](https://ordinary-increase-e87.notion.site/RPA-DATA
 
   - **shippings**
 
-    | Columna                | Tipo              | Descripción                            |
-    |------------------------|-------------------|----------------------------------------|
-    | shipping_id            | ObjectId          | Id de envio                            |
-    | shipping_date          | datetime          | Fecha de envio                         |
-    | shipping_status        | string            | Estado admitidas: returned - cancelled |
-    | order_vendor_dbname    | ObjectId          | Relación del usuario                   |
+    | Columna                | Tipo              | Descripción                                        |
+    |------------------------|-------------------|----------------------------------------------------|
+    | shipping_id            | ObjectId          | Id de envio                                        |
+    | shipping_date          | datetime          | Fecha de envio                                     |
+    | shipping_status        | string            | Estado admitidas: returned - cancelled - completed |
+    | order_vendor_dbname    | ObjectId          | Relación del usuario                               |
 
   - **logs_sent_messages**
 
