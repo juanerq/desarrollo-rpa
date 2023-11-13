@@ -88,6 +88,12 @@ Al ejecutar el servicio
 - Si existe el archivo `shipments-data.csv` en la carpeta `files` se eliminaran las colecciones (users, shippings) y se poblará la base de datos con el archivo CSV.
 - Se realizará el monitoreo a la hora configurada.
 
+### Recrear contenedor del servicio
+
+```bash
+docker compose up my-service -d --build
+```
+
 ### Detener ejecución del servicio
 
 ```bash
