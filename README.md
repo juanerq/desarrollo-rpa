@@ -1,7 +1,7 @@
 # Prueba tecnica RPA (DATA)
 ## Sobre el proyecto
 
-Con base a estas [instrucciones](https://ordinary-increase-e87.notion.site/RPA-DATA-2da37f1d8e3b46bcbece442ca238678c) se realizo el servicio el cual se ejecuta en un contenedor de Docker, se elegio esta herramienta por su faciliad de despliegue y ejecución
+Siguiendo las [instrucciones](https://ordinary-increase-e87.notion.site/RPA-DATA-2da37f1d8e3b46bcbece442ca238678c) proporcionadas, se implementó el servicio dentro de un contenedor Docker. La elección de esta herramienta se fundamentó en su facilidad de despliegue y ejecución, lo que optimiza el proceso y asegura una mayor eficiencia en la gestión del servicio.
 
 ### Curiosidades
 - **Patrones de diseño**
@@ -58,9 +58,9 @@ git clone https://github.com/juanerq/desarrollo-rpa.git
 ### 3. Configurar variables de entorno
 - Basarse en el archivo `.env.example`
 - Llenar estos campos
-  - `EMAIL` correo donde van a llegar los mensajes
+  - `EMAIL` correo que hará el envio de los mensajes
   - `EMAIL_PASS` contraseña de aplicación en google, pasos para generarla
-    - Gestionar tu cuenta de Google
+    - Ingresar en tu cuenta de Gmail a `Gestionar tu cuenta de Google`
     - Buscar `Contraseñas de aplicaciones`
     - En el campo `App name` ingresar el nombre deseado de la llave
     - Click en `Crear`
