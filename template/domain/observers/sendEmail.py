@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 from domain.entities.ObserverAlert import ObserverAlert
 from config.env import config
 from presentation.email.emailSender import EmailSender
@@ -8,7 +9,6 @@ from infrastructure.schemas.logSentMessages import createLogSentMessage
 from bson.objectid import ObjectId
 from utils.main import Utils
 
-date = datetime.strptime('2023-06-01', "%Y-%m-%d")
 
 class ObserverSendEmail(ObserverAlert):
   def update(self, change):
@@ -27,16 +27,7 @@ class ObserverSendEmail(ObserverAlert):
     html_content = self.createHtml(orders)
     email_sender.send_html_email(to_address, subject, html_content, True)
     
-    orders_ids = [order['_id'] for order in orders]
-
-
-    self.createLog(
-      ObjectId(user.id),
-      orders_ids,
-      date
-    )
-
-    print(f"📬 Email sent to user {user.user_id} to email {user.email} - num orders {len(orders)}")
+    logging.info(f"📬 Email sent to user {user.user_id} to email {user.email} - num orders {len(orders)}")
 
   def createHtml(self, shippings: list[Shippings]) -> str:
     with open("template/config/templates/email.html", "r") as template_file:
@@ -45,15 +36,3 @@ class ObserverSendEmail(ObserverAlert):
     template = Template(template_content)
 
     return template.render(shippings=shippings)
-  
-  def createLog(self, user_id: ObjectId, shippings: list[ObjectId], date: datetime = datetime.now()):
-    Utils.isObjectId(user_id, 'user_id')
-
-    for shipping in shippings:
-      Utils.isObjectId(shipping, 'shipping_id')
-
-    createLogSentMessage({
-      'user_id': user_id,
-      'shippings': shippings,
-      'date': date
-    })

@@ -62,14 +62,14 @@ def checkUsersWithCanceledShipping(status_list: list[Status], date: datetime = d
     'shipping_date': {'$gte': start_of_month, '$lte': end_of_month},
     '$or': [{'shipping_status': status } for status in status_list]
   })
+  
   userOrders = {}
-  count = 0
+
   for order in orders:
-    count += 1
     username = str(order.get("order_vendor_dbname"))
 
     if username not in userOrders:
       userOrders[username] = []
     userOrders[username].append(order)
-  print(count)
+
   return userOrders

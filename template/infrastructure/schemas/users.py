@@ -3,7 +3,7 @@ from infrastructure.models.user import User
 from config.db import conn
 
 myDb = conn.store
-collectionUser = myDb.user
+collectionUser = myDb.users
 
 def userEntity(item) -> User:
   return User(**item)

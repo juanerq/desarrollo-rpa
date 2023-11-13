@@ -1,0 +1,9 @@
+python-dotenv
+typing
+python-abc
+secure-smtplib
+jinja2
+pymongo
+pydantic[email]
+python-crontab
+schedule

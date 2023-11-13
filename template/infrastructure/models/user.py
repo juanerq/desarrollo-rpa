@@ -1,7 +1,7 @@
 from datetime import datetime
 import re
 from typing import Optional
-from pydantic import BaseModel, EmailStr, constr, validator, root_validator
+from pydantic import BaseModel, EmailStr, constr, root_validator, field_validator
 from bson.objectid import ObjectId
 
 class User(BaseModel):
@@ -17,7 +17,7 @@ class User(BaseModel):
 
     super().__init__(*args, **kwargs)
 
-  @validator("phone_number")
+  @field_validator("phone_number")
   def validate_phone_number(cls, value):
       if value is not None and not re.match(r'^[1-9][0-9]*$', value):
           raise ValueError("Invalid phone number format")

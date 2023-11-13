@@ -1,0 +1,6 @@
+EL archivo que se carga a la base de datos debe tener estos campos y el nombre del archivo debe ser: 
+shipments-data.csv
+
+shipping_id,shipping_status,shipping_date,order_vendor_dbname
+1817455,64782a6fb40f7fe03829fa36,returned,2023-06-01,bigcolors_1381618804
+1817456,64782a70449eb1e02a585e14,cancelled,2023-06-01,bigcolors_1381618804

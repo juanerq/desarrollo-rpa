@@ -23,7 +23,6 @@ def getMessagesSent(date: datetime = datetime.now()) -> dict:
   messages = collectionLogSentMessages.find({
     'date': {'$gte': start_of_month, '$lte': end_of_month},
   })
-
   return messages
 
 def getMessagesIdsSent(date: datetime = datetime.now()) -> dict:

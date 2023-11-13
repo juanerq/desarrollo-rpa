@@ -23,10 +23,7 @@ class ObserverMonitor(MonitorOrders):
         'user': self.user,
         'orders': ordersFound
       }
-      #print(f"{len(self.orders)} {self.user.username} user orders")
 
-      """ for order in self.orders:
-        print(order) """
       self.notify_changes(data)
     
   @property
