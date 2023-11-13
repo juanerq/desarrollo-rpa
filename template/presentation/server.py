@@ -1,3 +1,4 @@
+from bson.objectid import ObjectId
 from schedule import repeat, every
 from datetime import datetime
 import logging
@@ -11,7 +12,7 @@ from domain.observers.sendEmail import ObserverSendEmail
 from domain.observers.messageLogs import ObserverMessageLogs
 
 # Logica de schemas
-from infrastructure.schemas.users  import getAllUsers
+from infrastructure.schemas.users  import getAllUsersByIds
 from infrastructure.schemas.shippings import checkUsersWithCanceledShipping
 from infrastructure.schemas.logSentMessages import getMessagesIdsSent
 
@@ -36,9 +37,11 @@ class Server():
 
       # Se obtienen los usuarios con envíos cancelados en un diccionario donde la llave es el usuario y el valor la lista de ordenes
       userOrders = checkUsersWithCanceledShipping(config['CANCELLATION_STATUS'], datetime.now(), messageIds)
-      users = getAllUsers()
+      # Ids de usuarios con pedidos cancelados este mes
+      idsUsers = [ObjectId(user_id) for user_id in userOrders.keys()]
+      users = getAllUsersByIds(idsUsers)
 
-      logging.debug(f"📦 Number of users to monitor: {len(users)}")
+      logging.info(f"📦 Number of users to monitor the current month: {len(users)}")
 
       for user in users:
         user_mongo_id = str(user.id)
@@ -61,5 +64,6 @@ class Server():
         # Se ejecuta el monitor
         userMonitor.monitor()
 
+      logging.info(f"✅ Monitoring canceled shipments completed")
     except Exception as err:
       logging.exception(err)

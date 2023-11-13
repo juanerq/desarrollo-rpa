@@ -34,4 +34,4 @@ def uploadShipmentsData():
     nuevo_path = os.path.join(os.path.dirname(DATA_FILE_PATH), 'uploaded-data.csv')
     os.rename(DATA_FILE_PATH, nuevo_path)
   else:
-    logging.warning(f"No file found to load in the path {DATA_FILE_PATH}")
+    logging.debug(f"No file found to load in the path {DATA_FILE_PATH}")

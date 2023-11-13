@@ -1,4 +1,5 @@
 from typing import Optional
+from bson.objectid import ObjectId
 
 # Modelos
 from infrastructure.models.user import User
@@ -19,6 +20,11 @@ def userEntityList(entity) -> list[User]:
 
 def getAllUsers() -> list[User]:
   return userEntityList(collectionUser.find())
+
+def getAllUsersByIds(users_to_search: list[ObjectId] = []) -> list[User]:
+  return userEntityList(collectionUser.find({
+    '_id': { '$in': users_to_search } 
+  }))
 
 def getUser(user: User) -> Optional[User]:
   user_db = collectionUser.find_one(user)
