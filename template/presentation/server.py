@@ -28,6 +28,7 @@ class Server():
   @repeat(every().day.at(EXECUTE_TIME))
   def start():
     try:
+      logging.info(f"🚀 Monitoring canceled shipments...")
       # Se obtienen los envíos ya notificados de los usuarios para omitirlos en los próximos mensajes
       messageIds = getMessagesIdsSent()
 
@@ -37,7 +38,7 @@ class Server():
       userOrders = checkUsersWithCanceledShipping(config['CANCELLATION_STATUS'], datetime.now(), messageIds)
       users = getAllUsers()
 
-      logging.info(f"📦 Number of users with canceled shipments {len(users)}")
+      logging.debug(f"📦 Number of users to monitor: {len(users)}")
 
       for user in users:
         user_mongo_id = str(user.id)

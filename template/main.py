@@ -9,7 +9,7 @@ if __name__ == '__main__':
   # Cargue automatico de archivo shipments-data.csv en Mongo DB
   uploadShipmentsData()
 
-  logging.info('🚀 Service running...')
+  logging.info('🟢 Online service')
 
   # Iniciar monitoreo de tareas programadas
   while True:
