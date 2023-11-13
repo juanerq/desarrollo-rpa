@@ -84,7 +84,9 @@ docker compose up mongo-db -d
 docker compose up my-service -d
 ```
 
-Al ejecutar el servicio, se poblará la base de datos con el archivo CSV y se realizará el monitoreo a la hora configurada.
+Al ejecutar el servicio
+- Si existe el archivo `shipments-data.csv` en la carpeta `files` se eliminaran las colecciones (users, shippings) y se poblará la base de datos con el archivo CSV.
+- Se realizará el monitoreo a la hora configurada.
 
 ### Detener ejecución del servicio
 
