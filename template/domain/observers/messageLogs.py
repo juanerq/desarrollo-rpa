@@ -1,10 +1,13 @@
 from datetime import datetime
-from domain.entities.ObserverAlert import ObserverAlert
-from infrastructure.schemas.logSentMessages import createLogSentMessage
 from bson.objectid import ObjectId
 
-date = datetime.strptime('2023-06-01', "%Y-%m-%d")
+# Clase abstracta del observador
+from domain.entities.ObserverAlert import ObserverAlert
 
+# Logica de schemas
+from infrastructure.schemas.logSentMessages import createLogSentMessage
+
+# Clase para crear logs de mensajes enviados en la base de datos
 class ObserverMessageLogs(ObserverAlert):
   def update(self, change):
     user = change['user']
@@ -15,5 +18,5 @@ class ObserverMessageLogs(ObserverAlert):
     createLogSentMessage({
       'user_id': ObjectId(user.id),
       'shippings': orders_ids,
-      'date': date
+      'date': datetime.now()
     })

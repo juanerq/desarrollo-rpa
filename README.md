@@ -11,7 +11,7 @@ Con base a estas [instrucciones](https://ordinary-increase-e87.notion.site/RPA-D
 
   - **Observador**
   
-    Se aplicó para lograr flexibilidad en las notificaciones, permitiendo la integración con diversas herramientas como correos electrónicos, mensajes SMS, bases de datos, etc., al cumplirse ciertos criterios.
+    Se aplicó para lograr flexibilidad en las notificaciones, permitiendo la integración con diversas herramientas (correos electrónicos, mensajes SMS, bases de datos, etc), al cumplirse ciertos criterios.
 
 - **Colecciones db**
   - **users**

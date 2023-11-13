@@ -20,6 +20,7 @@ def getDataFromCSV(csv_file_path: str):
 
 def loadShippings(csv_file_path: str, test_mail):
   try:
+    logging.info(f"Loading data from {csv_file_path}... 📑")
     data = getDataFromCSV(csv_file_path)
 
     nameUsers = set()
@@ -39,12 +40,14 @@ def loadShippings(csv_file_path: str, test_mail):
         })
       )
 
-    logging.info('🎈 Loading users...')
+    logging.info(f"Loading users... 🤖({len(newUsers)})")
     result = bulkCreateUsers(newUsers)
 
     ids_insertados = result.inserted_ids
     index = 0
 
+    # Se itera la lista de ids insertados para asignarlos a los usuarios
+    # Se crea un diccionario para acceder a los usuarios por su nombre
     for objectId in ids_insertados:
       newUsers[index]._id = objectId
       dicUser[newUsers[index].username] = newUsers[index]
@@ -52,7 +55,7 @@ def loadShippings(csv_file_path: str, test_mail):
 
     index = 1
 
-    logging.info('📦 Loading shippings...')
+    logging.info(f"Loading shippings... 📦({len(data)})")
     for row in data:
       newShipping = {
         'shipping_id': ObjectId(row['shipping_id']),
@@ -77,4 +80,4 @@ def loadShippings(csv_file_path: str, test_mail):
 
   except Exception as e:
     logging.error(e)
-    logging.error('Upload data 👎')
+    logging.error('Error upload data 👎')

@@ -1,9 +1,15 @@
 from typing import Optional
-from infrastructure.models.user import User
-from config.db import conn
 
+# Modelos
+from infrastructure.models.user import User
+
+# Conexión a la base de datos
+from config.db import conn
 myDb = conn.store
+
+# Colección de users
 collectionUser = myDb.users
+
 
 def userEntity(item) -> User:
   return User(**item)

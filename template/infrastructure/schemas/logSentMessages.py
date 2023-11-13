@@ -1,9 +1,13 @@
 from datetime import datetime, timedelta
+
+# Modelos
 from infrastructure.models.logSentMessages import LogSentMessages
 
+# Conexión a la base de datos
 from config.db import conn
-
 myDb = conn.store
+
+# Colección de logs_sent_messages
 collectionLogSentMessages = myDb.logs_sent_messages
 
 

@@ -1,12 +1,20 @@
 from datetime import datetime, timedelta
-from config.db import conn
-from infrastructure.models.shippings import Shippings
-from infrastructure.models.status import Status
-from infrastructure.schemas.users import userEntity
 from bson.objectid import ObjectId
 
+# Conexión a la base de datos
+from config.db import conn
 myDb = conn.store
+
+# Modelos
+from infrastructure.models.shippings import Shippings
+from infrastructure.models.status import Status
+
+# Logica de schemas
+from infrastructure.schemas.users import userEntity
+
+# Conexión a la colección de envíos
 collectionShippings = myDb.shippings
+# Conexión a la colección de usuarios
 collectionUsers = myDb.user
 
 
@@ -25,6 +33,7 @@ def checkCanceledShipmentsThisMonth(user_mongo_id: str, status_list: list[Status
   end_of_month = (start_of_month + timedelta(days=32)).replace(day=1, hour=0, minute=0, second=0, microsecond=0) - timedelta(seconds=1)
 
   orderLis = []
+  # Se buscan las ordenes con los estados pasados por parametro y las ordenes ya notificadas que se deben omitir
   orders = collectionShippings.find({
     'order_vendor_dbname': ObjectId(user_mongo_id),
     'shipping_date': {'$gte': start_of_month, '$lte': end_of_month},
