@@ -1,13 +1,32 @@
 import logging
 import os
+
+# Servicios
 from presentation.upload.loadData import loadShippings
+
+# Configuración
 from config.env import config
+
+# Conexión a la base de datos
+from config.db import conn
+myDB = conn.store
+
+# Colecciones
+colectionUsers = myDB.users
+colectionShippings  = myDB.shippings
 
 FILE_NAME = 'shipments-data.csv'
 DATA_FILE_PATH = 'files/' + FILE_NAME
 
+
 def uploadShipmentsData():
+  # Se valida si el archivo de datos existe
   if os.path.exists(DATA_FILE_PATH):
+    # Se eliminan los datos de la colecciones para cargar nuevos datos sin duplicarlos
+    logging.info("Cleaning data collections... 🗑️")
+    colectionUsers.drop()
+    colectionShippings.drop()
+    
     loadShippings(DATA_FILE_PATH, config['TEST_MAIL'])
 
     # Renombrar archivo de datos subido
