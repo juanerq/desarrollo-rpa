@@ -71,6 +71,7 @@ git clone https://github.com/juanerq/desarrollo-rpa.git
   - `EXECUTE_TIME` hora de ejecución diaria en formato militar
   - `TEST_MAIL` Correo al que se simulará el envío de correos a los usuarios
   - `MONITOR_IN_MONTH` Mes en que se hará el monitoreo, formato año-mes, por defecto es el mes actual
+  - `MONGO_URL` Leer explicación para configurar la URL de conexion que esta en el .env.example
   
 <br/>
 
